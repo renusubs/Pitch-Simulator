@@ -1,0 +1,7 @@
+# Python & Virtual Environments
+__pycache__/
+venv/
+.env
+
+# AWS Credentials (just in case you have a local config file)
+.aws/
