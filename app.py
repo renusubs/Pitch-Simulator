@@ -2,6 +2,10 @@ import os
 import sys
 import logging
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv(override=True)
+
 from strands import Agent
 from strands.models import BedrockModel
 
@@ -11,14 +15,14 @@ st.set_page_config(page_title="VC Pitch Evaluator", page_icon="🚀", layout="ce
 st.title("🚀 VC Pitch Evaluator")
 st.write("Powered by Amazon Bedrock & Strands SDK")
 
-# Make sure AWS environment variables are available
-os.environ["AWS_DEFAULT_REGION"] = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
-
 @st.cache_resource
 def load_agent():
     """Initializes and caches the agent so it doesn't reload on every button click."""
     model = BedrockModel(
-        model_id="us.meta.llama3-3-70b-instruct-v1:0",
+        model_id="us.amazon.nova-pro-v1:0",
+        region_name="us-east-1",
+        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
         streaming=False
     )
     return Agent(
